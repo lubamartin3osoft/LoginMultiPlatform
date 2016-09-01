@@ -1,0 +1,4 @@
+packages/
+.vs/
+LoginMultiPlatform.Droid/obj/
+LoginMultiPlatform.Core/obj/
