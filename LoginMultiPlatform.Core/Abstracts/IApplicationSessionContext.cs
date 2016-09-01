@@ -7,7 +7,7 @@ namespace LoginMultiPlatform.Core.Abstracts
    {
       User User { get; }      
       Task LogOutAsync();
-      Task StoreEmailAsync(User user);
-      Task InitializeConextAsync(IUserRepository userRepository);
+      Task StoreUserAsync(User user);
+      Task InitializeConextAsync();
    }
 }

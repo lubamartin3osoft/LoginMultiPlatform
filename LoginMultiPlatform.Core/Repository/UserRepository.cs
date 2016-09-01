@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using LoginMultiPlatform.Core.Abstracts;
 using LoginMultiPlatform.Core.Data;
+using SQLite.Net.Async;
 
 namespace LoginMultiPlatform.Core.Repository
 {
@@ -18,7 +19,7 @@ namespace LoginMultiPlatform.Core.Repository
          await _connection.InsertOrReplaceAsync(user);
       }
 
-      public Task<User> GetEmailAsync()
+      public Task<User> GetUserlAsync()
       {
          Task<User> email = _connection.Table<User>().FirstOrDefaultAsync();
          return email;

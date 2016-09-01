@@ -2,3 +2,8 @@ packages/
 .vs/
 LoginMultiPlatform.Droid/obj/
 LoginMultiPlatform.Core/obj/
+LoginMultiPlatform.iOS/obj/
+LoginMultiPlatform.Droid/bin/
+LoginMultiPlatform.Core/bin/Debug/SimpleInjector.dll
+LoginMultiPlatform.Core/bin/
+LoginMultiPlatform.iOS/bin/

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using LoginMultiPlatform.Core.Data;
+using SQLite.Net.Async;
 
 namespace LoginMultiPlatform.Core.Database
 {

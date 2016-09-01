@@ -20,7 +20,7 @@ namespace LoginMultiPlatform.Core.Services
 
       public async Task<User> GetEmailAsync()
       {
-         User user = await _userRepository.GetEmailAsync();
+         User user = await _userRepository.GetUserlAsync();
          return user;
       }
    }
