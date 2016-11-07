@@ -1,5 +1,6 @@
 using System;
 using LoginMultiPlatform.Core.Data;
+using LoginMultiPlatform.Core.Services;
 using LoginMultiPlatform.Core.Utilities;
 using UIKit;
 
@@ -21,19 +22,19 @@ namespace LoginMultiPlatform.iOS.ViewControlers
       public override void ViewDidLoad()
       {
          base.ViewDidLoad();
-         LoginButton.TouchUpInside += async (sender, args) =>
+         LoginButton.TouchUpInside += (sender, args) =>
          {
             string email = EmailTextField.Text;
-            if (EmailValidator.ValidateEmail(email))
+            AccountService accountService =  new AccountService(email);
+            accountService.Login(() =>
+            {
+               UIAlertView alertView = new UIAlertView("error", "Email is not valid", null, "OK", null);
+               alertView.Show();
+            }, async () => //success
             {
                await ApplicationSessionContext.Instance.StoreUserAsync(new User(email));
                NavigationController.PushViewController(new LogoutViewController(), false);
-            }
-            else
-            {
-               //TODO zobrazit chybu
-            }
-            
+            });            
 
          };
          // Perform any additional setup after loading the view, typically from a nib.

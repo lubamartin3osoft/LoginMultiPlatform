@@ -33,8 +33,8 @@ namespace LoginMultiPlatform.iOS
       private async void Initialize()
       {
          Window = new UIWindow(UIScreen.MainScreen.Bounds);
-
          Window.RootViewController = new LoginViewControler();
+
          SQLitePlatformIOS platform = new SQLitePlatformIOS();
          platform.SQLiteApi.Config(ConfigOption.MultiThread);
          IosDatabaseEnvironment databaseEnvironment = new IosDatabaseEnvironment();
@@ -52,6 +52,10 @@ namespace LoginMultiPlatform.iOS
          if (ApplicationSessionContext.Instance.User != null)
          {
             Window.RootViewController = new LogoutViewController();
+         }
+         else
+         {
+            Window.RootViewController = new LoginViewControler();
          }
 
          Window.MakeKeyAndVisible();
