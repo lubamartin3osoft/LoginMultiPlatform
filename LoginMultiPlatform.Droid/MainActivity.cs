@@ -1,30 +1,44 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using LoginMultiPlatform.Core.Repository;
+using LoginMultiPlatform.Core.Services;
+using LoginMultiPlatform.Core.Utilities;
+using LoginMultiPlatform.Droid.Activities;
+using LoginMultiPlatform.Droid.Utilities;
+using SQLite.Net;
+using SQLite.Net.Async;
+using SQLite.Net.Interop;
 
 namespace LoginMultiPlatform.Droid
 {
-   [Activity(Label = "LoginMultiPlatform.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+   [Activity(Label = "MainActivity", MainLauncher = true, Icon = "@drawable/icon")]
    public class MainActivity : Activity
-   {
-      int count = 1;
+   {      
 
-      protected override void OnCreate(Bundle bundle)
+      protected override async void OnCreate(Bundle bundle)
       {
          base.OnCreate(bundle);
+         DroidDatabaseEnviroment databaseEnviroment = new DroidDatabaseEnviroment();
+         ISQLitePlatform platform = new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid();
 
-         // Set our view from the "main" layout resource
-         SetContentView(Resource.Layout.Main);
+         DatabaseService databaseService = new DatabaseService(databaseEnviroment, () =>
+         {
+            SQLiteConnectionWithLock connectionWithLock = new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(databaseEnviroment.DatabasePath, false));
+            SQLiteAsyncConnection connection = new SQLiteAsyncConnection(() => connectionWithLock);
+            return connection;
+         });
 
-         // Get our button from the layout resource,
-         // and attach an event to it
-         Button button = FindViewById<Button>(Resource.Id.MyButton);
+         await databaseService.InitializeDatabaseConnectionAsync();
+         await ApplicationSessionContext.Instance.InitializeConextAsync(
+            new UserRepository(databaseService.DatabaseConnection));
+         BaseContainer.Instance.InitializeDependencies(databaseService.DatabaseConnection, () => ApplicationSessionContext.Instance);
 
-         button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
+         //Autologin
+         Intent intent = ApplicationSessionContext.Instance.IsLogged
+            ? new Intent(ApplicationContext, typeof(LogoutActivity))
+            : new Intent(ApplicationContext, typeof(LoginActivity));
+         StartActivity(intent);
       }
    }
 }

@@ -5,8 +5,9 @@ namespace LoginMultiPlatform.Core.Abstracts
 {
    public interface IUserRepository
    {
-      Task InsertEmailAsync(User user);
-      Task<User> GetUserlAsync();
-      Task DeleteEmailAsync(User user);
+      Task InsertUserAsync(User user);
+      Task<User> GetUserAsync();
+      Task DeleteUserAsync(User user);
+      Task DeleteAllUsersAsync();
    }
 }

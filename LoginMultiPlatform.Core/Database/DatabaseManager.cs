@@ -14,14 +14,13 @@ namespace LoginMultiPlatform.Core.Database
       }
 
       public async Task CreateDatabaseTablesAsync()
-      {
-         await _connection.DeleteAllAsync<User>();
-         await _connection.CreateTableAsync<User>();
+      {         
+         await _connection.CreateTableAsync<UserEntity>();
       }
 
       public async Task DeleteDatabaseTablesAsync()
       {
-         await _connection.DropTableAsync<User>();
+         await _connection.DropTableAsync<UserEntity>();
       }
    }
 }

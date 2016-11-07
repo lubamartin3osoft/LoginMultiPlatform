@@ -15,12 +15,12 @@ namespace LoginMultiPlatform.Core.Services
 
       public async Task InsertEmailAsync(User user)
       {
-         await _userRepository.InsertEmailAsync(user);
+         await _userRepository.InsertUserAsync(user);
       }
 
       public async Task<User> GetEmailAsync()
       {
-         User user = await _userRepository.GetUserlAsync();
+         User user = await _userRepository.GetUserAsync();
          return user;
       }
    }

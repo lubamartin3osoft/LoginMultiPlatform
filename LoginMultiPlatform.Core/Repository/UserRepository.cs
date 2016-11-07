@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using LoginMultiPlatform.Core.Abstracts;
 using LoginMultiPlatform.Core.Data;
+using LoginMultiPlatform.Core.Mappers;
 using SQLite.Net.Async;
 
 namespace LoginMultiPlatform.Core.Repository
@@ -14,20 +15,25 @@ namespace LoginMultiPlatform.Core.Repository
          _connection = connection;
       }
 
-      public async Task InsertEmailAsync(User user)
+      public async Task InsertUserAsync(User user)
       {
-         await _connection.InsertOrReplaceAsync(user);
+         await _connection.InsertOrReplaceAsync(UserMapper.FromDomainToData(user));
       }
 
-      public Task<User> GetUserlAsync()
+      public async Task<User> GetUserAsync()
       {
-         Task<User> email = _connection.Table<User>().FirstOrDefaultAsync();
-         return email;
+         UserEntity userEntity = await _connection.Table<UserEntity>().FirstOrDefaultAsync();
+         return UserMapper.FromDataToDomain(userEntity);
       }
 
-      public async Task DeleteEmailAsync(User user)
+      public async Task DeleteUserAsync(User user)
       {
-         await _connection.DeleteAsync(user);
+         await _connection.DeleteAsync(UserMapper.FromDomainToData(user));
+      }
+
+      public async Task DeleteAllUsersAsync()
+      {
+         await _connection.DeleteAllAsync<UserEntity>();
       }
    }
 }

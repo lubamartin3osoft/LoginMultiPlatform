@@ -129,7 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LoginMultiPlatform.Core\LoginMultiPlatform.Core.csproj">
-      <Project>{ab2cab6a-db21-49df-ab24-af91365a8146}</Project>
+      <Project>{49D34679-22E7-417F-9D84-015B28124FBF}</Project>
       <Name>LoginMultiPlatform.Core</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Foundation;
+﻿using System.Threading.Tasks;
 using LoginMultiPlatform.Core.Abstracts;
 using LoginMultiPlatform.Core.Data;
-using LoginMultiPlatform.Core.Services;
 using LoginMultiPlatform.Core.Utilities;
 using LoginMultiPlatform.iOS.ViewControlers;
 using UIKit;
@@ -25,14 +20,14 @@ namespace LoginMultiPlatform.iOS
 
       public async Task LogOutAsync()
       {
-         await _userRepository.DeleteEmailAsync(User);
+         await _userRepository.DeleteUserAsync(User);
          
       }      
 
       public async Task StoreUserAsync(User user)
       {
          User = user;         
-         await _userRepository.InsertEmailAsync(user);
+         await _userRepository.InsertUserAsync(user);
          _navigationController.SetViewControllers(new UIViewController[] { new LoginViewControler() }, false);
       }
 
@@ -44,13 +39,13 @@ namespace LoginMultiPlatform.iOS
       public async Task InitializeConextAsync(IUserRepository userRepository)
       {
          _userRepository = userRepository;
-         User = await userRepository.GetUserlAsync();
+         User = await userRepository.GetUserAsync();
       }
 
       public async Task InitializeConextAsync()
       {
          _userRepository = BaseContainer.Instance.GetInstance<IUserRepository>();
-         User = await _userRepository.GetUserlAsync();
+         User = await _userRepository.GetUserAsync();
       }
    }
 }
